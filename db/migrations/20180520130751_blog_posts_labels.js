@@ -1,11 +1,10 @@
-const TABLE_NAME = 'users'
+const TABLE_NAME = 'blog_posts_labels'
 
 exports.up = function(knex, Promise) {
   return knex.schema.createTable(TABLE_NAME, function(table){
     table.increments()
-    table.string('username').notNullable()
-    table.string('password').notNullable()
-    table.timestamps(true, true)
+    table.integer('blog_posts_id').references('blog_posts.id')
+    table.integer('labels_id').references('labels.id')
   })
 };
 

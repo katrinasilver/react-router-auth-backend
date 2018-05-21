@@ -1,13 +1,12 @@
 const express = require('express')
 const router = express.Router()
-const userController = require('../controllers/users')
+const labelController = require('../controllers/labels')
 
 //////////////////////////////////////////////////////////////////////////////
 // Basic CRUD Methods
 //////////////////////////////////////////////////////////////////////////////
 
-router.post('/', userController.create)
-router.get('/allUsersWithBlogPosts', userController.allUsersWithBlogPosts)
+router.get('/', labelController.getAll)
 
 
 

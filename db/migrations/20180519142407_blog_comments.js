@@ -1,10 +1,11 @@
-const TABLE_NAME = 'users'
+const TABLE_NAME = 'blog_comments'
 
 exports.up = function(knex, Promise) {
   return knex.schema.createTable(TABLE_NAME, function(table){
     table.increments()
-    table.string('username').notNullable()
-    table.string('password').notNullable()
+    table.integer('blog_posts_id').references('blog_posts.id')
+    table.integer('users_id').references('users.id')
+    table.text('comment')
     table.timestamps(true, true)
   })
 };

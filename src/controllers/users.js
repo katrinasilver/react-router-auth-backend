@@ -20,10 +20,18 @@ function create(req, res, next){
   .catch(next)
 }
 
+function allUsersWithBlogPosts(req, res, next){
+  userModel.allUsersWithBlogPosts()
+  .then(users => {
+    res.status(200).send({users})
+  })
+  .catch(next)
+}
+
 //////////////////////////////////////////////////////////////////////////////
 // Quality of Life functions
 //////////////////////////////////////////////////////////////////////////////
 
 module.exports = {
-  create
+  create, allUsersWithBlogPosts
 }

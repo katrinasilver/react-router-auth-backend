@@ -52,7 +52,14 @@ function create(username, password){
   })
 }
 
+function allUsersWithBlogPosts(){
+  return db('blog_posts').select('users.username as username','users.id as id')
+  .innerJoin('users', 'users.id', 'blog_posts.users_id')
+  .distinct('users.id').orderBy('users.username')
+}
+
 module.exports = {
   getOneByUserName,
-  create
+  create,
+  allUsersWithBlogPosts
 }

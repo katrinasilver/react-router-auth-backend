@@ -1,11 +1,10 @@
-const TABLE_NAME = 'users'
+const TABLE_NAME = 'labels'
+
 
 exports.up = function(knex, Promise) {
   return knex.schema.createTable(TABLE_NAME, function(table){
     table.increments()
-    table.string('username').notNullable()
-    table.string('password').notNullable()
-    table.timestamps(true, true)
+    table.string('label_text')
   })
 };
 
