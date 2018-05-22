@@ -17,3 +17,21 @@ module.exports.getAllMonthsWithBlogs = (req, res, next) => {
   })
   .catch(next)
 }
+
+module.exports.create = (req, res, next) => {
+  const { title, body, labelIds } = req.body
+  const { id } = req.claim
+  blogPostsModel.create(id, title, body, labelIds)
+  .then(blog_post => {
+    res.status(200).send({blog_post})
+  })
+  .catch(next)
+}
+
+module.exports.remove = (req, res, next)=>{
+  blogPostsModel.remove(req.params.id, req.claim.id)
+  .then(({id, ...blog_post}) => {
+    res.status(200).send({blog_post})
+  })
+  .catch(next)
+}

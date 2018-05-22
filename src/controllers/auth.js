@@ -27,10 +27,10 @@ function login(req, res, next){
 
   // 2. Attempt Login
   authModel.login(req.body.username, req.body.password)
-  .then(function(user){
-
+  .then(function({id, username}){
+    console.log(id, username)
     // 3. Create token
-    const token = jwt.sign({id: user.id}, process.env.SECRET)
+    const token = jwt.sign({id, username }, process.env.SECRET)
 
     // 4. Send back token
     return res.status(200).send({ token })
@@ -40,7 +40,7 @@ function login(req, res, next){
 
 
 function getAuthStatus(req, res, next){
-    res.status(200).send({id:req.claim.id})
+    res.status(200).send({...req.claim})
 }
 
 //////////////////////////////////////////////////////////////////////////////

@@ -5,7 +5,7 @@ const TABLE_NAME = 'blog_posts'
 exports.seed = function(knex, Promise) {
   const blog_posts = [...Array(200).keys()].map(ele => {
     return Promise.all([
-      axios.get('https://jaspervdj.be/lorem-markdownum/markdown.txt?num-blocks=100'),
+      axios.get('https://jaspervdj.be/lorem-markdownum/markdown.txt'),
       knex.raw('select id from users order by random() limit 1')
     ])
     .then(([response, user]) => {

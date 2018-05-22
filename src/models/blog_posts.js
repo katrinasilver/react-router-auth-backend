@@ -4,7 +4,7 @@ module.exports.getAll = (orderByColumn='created_at', orderDirection='asc', offse
   console.log(searchColumns)
 
   const query = db('blog_posts')
-    .select('blog_posts.id as id', 'title', 'body', 'blog_posts.created_at as created_at', 'blog_posts.updated_at as updated_at', 'username')
+    .select('blog_posts.id as id', 'title', 'body', 'blog_posts.created_at as created_at', 'blog_posts.updated_at as updated_at', 'username', 'users.id as users_id')
     .innerJoin('users', 'users.id', 'blog_posts.users_id')
     .orderBy(orderByColumn, orderDirection)
     .offset(offset)
@@ -42,10 +42,7 @@ module.exports.getAll = (orderByColumn='created_at', orderDirection='asc', offse
       }
     })
   })
-
-  // return query
 }
-
 
 module.exports.getAllMonthsWithBlogs = () => {
   return db.raw(`
@@ -58,4 +55,25 @@ module.exports.getAllMonthsWithBlogs = () => {
     // removing unnecessary data from database response
     .then(raw => raw.rows)
     .then((allmonths) => allmonths.map(({num, month, year}) => ({ num, month:month.trim(), year })))
+}
+
+module.exports.create = (users_id, title, body, labelsIds) => {
+  return db('blog_posts')
+  .insert({users_id, title, body})
+  .returning('*')
+  .then(([newBlogPost]) => {
+    return Promise.all([
+      newBlogPost,
+      db('blog_posts_labels').insert(labelsIds.map(label => ({blog_posts_id: newBlogPost.id, labels_id: label})))
+    ])
+  })
+  .then(([blog_posts, labels])=> {
+    return blog_posts
+  })
+}
+
+module.exports.remove = (id, users_id)=> {
+  return db('blog_posts').del()
+  .where({id, users_id})
+  .returning('*')
 }
