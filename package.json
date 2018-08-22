@@ -7,6 +7,7 @@
     "test": "mocha",
     "start": "node ./src/app.js",
     "dev": "nodemon ./src/app.js",
+    "debug": "node ./src/app.js",
     "knex": "knex",
     "latest": "knex migrate:latest",
     "rollback": "knex migrate:rollback",

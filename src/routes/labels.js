@@ -1,13 +1,20 @@
 const express = require('express')
+const db = require('../../db')
+
 const router = express.Router()
-const labelController = require('../controllers/labels')
 
-//////////////////////////////////////////////////////////////////////////////
-// Basic CRUD Methods
-//////////////////////////////////////////////////////////////////////////////
-
-router.get('/', labelController.getAll)
+const LabelsModel = require('../models/labels')
+const LabelsController = require('../controllers/labels')
 
 
+// dependency injection
+const labelsModel = new LabelsModel(db)
+const labelsController = new LabelsController(labelsModel)
+
+// ////////////////////////////////////////////////////////////////////////////
+// Routes
+// ////////////////////////////////////////////////////////////////////////////
+
+router.get('/', labelsController.getAll)
 
 module.exports = router

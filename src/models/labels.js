@@ -1,11 +1,18 @@
-const db = require('../../db')
+// const db = require('../../db')
 
-module.exports.getAll = (limit) => {
-  const query = db('labels')
-
-  if(limit){
-    query.limit(limit)
+module.exports = class LabelsModel {
+  constructor(db){
+    this.db = db
   }
-
-  return query
+  getAll(limit){
+    const query = this.db('labels')
+  
+    if (limit) {
+      query.limit(limit)
+    }
+  
+    return query
+  }
 }
+
+
