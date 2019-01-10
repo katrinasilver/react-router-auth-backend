@@ -22,6 +22,7 @@
     "express": "^4.16.3",
     "jsonwebtoken": "^8.2.1",
     "knex": "^0.14.6",
+    "lorem-hipsum": "^0.1.7",
     "morgan": "^1.9.1",
     "pg": "^7.4.1"
   },

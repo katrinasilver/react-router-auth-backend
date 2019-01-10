@@ -1,9 +1,12 @@
 const axios = require('axios')
+const loremHipsum = require('lorem-hipsum')
+
 const TABLE_NAME = 'blog_posts'
 
 
+
 exports.seed = function(knex, Promise) {
-  const blog_posts = [...Array(200).keys()].map(ele => {
+  const blog_posts = [...Array(400).keys()].map(ele => {
     return Promise.all([
       axios.get('https://jaspervdj.be/lorem-markdownum/markdown.txt'),
       knex.raw('select id from users order by random() limit 1')
@@ -11,9 +14,9 @@ exports.seed = function(knex, Promise) {
     .then(([response, user]) => {
       return {
         id:ele+1,
-        title:`Blog Post ${ele+1}`,
+        title:loremHipsum({count:3, units:'words'}),
         users_id: user.rows[0].id,
-        body:response.data
+        body: loremHipsum({count:5, units:'paragraphs'}).replace(/\n/g, '\n\n')
       }
     })
   })

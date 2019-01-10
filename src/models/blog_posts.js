@@ -1,8 +1,6 @@
 const db = require('../../db')
 
 module.exports.getAll = (orderByColumn='created_at', orderDirection='asc', offset=0, limit, searchColumns) => {
-  console.log(searchColumns)
-
   const query = db('blog_posts')
     .select('blog_posts.id as id', 'title', 'body', 'blog_posts.created_at as created_at', 'blog_posts.updated_at as updated_at', 'username', 'users.id as users_id')
     .innerJoin('users', 'users.id', 'blog_posts.users_id')

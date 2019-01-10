@@ -12,6 +12,7 @@ createdb auth_example_dev
 
 ```
 npm run latest
+npm run seed
 ```
 
 ```

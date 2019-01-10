@@ -28,7 +28,6 @@ function login(req, res, next){
   // 2. Attempt Login
   authModel.login(req.body.username, req.body.password)
   .then(function({id, username}){
-    console.log(id, username)
     // 3. Create token
     const token = jwt.sign({id, username }, process.env.SECRET)
 

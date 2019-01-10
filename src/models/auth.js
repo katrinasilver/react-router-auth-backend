@@ -1,5 +1,5 @@
 const db = require('../../db')
-const bcrypt = require('bcrypt-as-promised')
+const bcrypt = require('bcrypt')
 const userModel = require('./users')
 
 //////////////////////////////////////////////////////////////////////////////
@@ -32,11 +32,9 @@ function login(username, password){
     // 2. compare password in the database with the password provided by user
     return bcrypt.compare(password, data.password)
   })
-  .catch(bcrypt.MISMATCH_ERROR, function(){
+  .then(function(status){
     // 3. If the passwords do not match, respond with 401 Unauthorized
-    throw { status: 401, message: "Unauthorized"}
-  })
-  .then(function(){
+    if(!status) throw { status: 401, message: "Unauthorized"}
     // 4. strip hashed password away from object
     delete user.password
     // 5. "return/continue" promise

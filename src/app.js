@@ -49,6 +49,7 @@ app.use(function(req, res, next){
 //////////////////////////////////////////////////////////////////////////////
 
 app.use(function(err, req, res, next){
+  console.log(err)
   const errorMessage = {}
 
   if(process.env.NODE_ENV !== 'production' && err.stack)
@@ -64,7 +65,7 @@ app.use(function(err, req, res, next){
 // Starting Server
 //////////////////////////////////////////////////////////////////////////////
 
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 5000
 
 app.listen(port, function(){
   console.log(`Listening on port ${port}`)
